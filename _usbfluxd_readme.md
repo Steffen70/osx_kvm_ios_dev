@@ -57,6 +57,15 @@ sudo systemctl status usbfluxd_host.service
 # Or manually start and stop the service
 sudo systemctl start usbfluxd_host.service
 sudo systemctl stop usbfluxd_host.service
+
+# Add a restart alias to .bash-alises (optional, but you need to restart the service often - so it's useful)
+[ -f ~/.bash_aliases ] || touch ~/.bash_aliases; echo "alias restart_usbfluxd='sudo systemctl restart usbfluxd_host.service'" >> ~/.bash_aliases
+
+# Reload the .bash_aliases (or restart the terminal)
+source ~/.bashrc
+
+# Restart the service
+restart_usbfluxd
 ```
 
 ### macOS Guest
@@ -85,31 +94,31 @@ sudo make install
 export PATH="/usr/local/sbin:$PATH"
 
 # Start usbmuxd
-sudo launchctl start usbmuxd
+# sudo launchctl start usbmuxd
+sudo launchctl start libusbmuxd
 
 # Start usbfluxd
 sudo usbfluxd -f -r 172.20.2.149:5000
 ```
 
-#### Install the `usbfluxd.guest.plist` (macOS service)
+I tried to create a service for `usbfluxd` on macOS, but I couldn't get it to work. You often need to restart the service to get it working again. So I recommend running the command manually.
+
+But you can add an alias to your `.zshrc` to start `usbfluxd` with a single command.
 
 ```bash
-# Make `usbfluxd_guest_service_install.sh` executable
-chmod +x usbfluxd_guest_service_install.sh
+# Check if you are using zsh (default shell on macOS)
+echo $SHELL
 
-# Set the IP address of the host machine
-$HOST_IP="172.20.2.149"
+# Create a .zshrc file if it doesn't exist
+[ -f ~/.zshrc ] || touch ~/.zshrc
 
-# Install the `usbfluxd.guest.plist`
-sudo ./usbfluxd_guest_service_install.sh
+# Add the following line to your .zshrc (or .bash-aliases if you are using bash)
+# Resolce usbfluxd to keep working even if usbfluxd is only available in the PATH temporarily
+echo "alias start_usbfluxd='sudo $(which usbfluxd) -f -r 172.20.2.149:5000'" >> ~/.zshrc
 
-# Enable the `usbfluxd.guest.plist`
-sudo launchctl load /Library/LaunchDaemons/usbfluxd.guest.plist
+# Reload the .bashrc or .zshrc (or restart the terminal)
+source ~/.zshrc
 
-# You can check the status of the service
-sudo launchctl list | grep usbfluxd.guest
-
-# Or manually start and stop the service
-sudo launchctl start usbfluxd.guest
-sudo launchctl stop usbfluxd.guest
+# run the alias
+start_usbfluxd
 ```

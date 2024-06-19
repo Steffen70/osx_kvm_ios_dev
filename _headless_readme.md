@@ -96,8 +96,10 @@ sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 # Ensure the iptables-persistent package is installed
 sudo apt-get install -y iptables-persistent
 
-# Save the current iptables rules
-sudo iptables-save > /etc/iptables/rules.v4
+# iptables-persistent will ask you if you want to save the current rules during installation - select yes
+
+# Or save the current iptables rules manually
+sudo iptables-save | sudo tee /etc/iptables/rules.v4
 ```
 
 ### Step 9: Connect from Any Device on the Network to the VM
