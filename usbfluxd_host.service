@@ -1,0 +1,12 @@
+[Unit]
+Description=Socat, usbmuxd, and usbfluxd service for macOS VM
+After=network.target
+
+[Service]
+ExecStartPre=/bin/bash -c 'systemctl start usbmuxd'
+ExecStartPre=%usbfluxd% -n
+ExecStart=/usr/bin/socat tcp-listen:5000,fork unix-connect:/var/run/usbmuxd
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
