@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# This script synchronizes the current branch with osx_kvm/master while maintaining a clean and professional commit history.
+# It fetches the latest changes from the osx_kvm remote, removes files that are no longer present in osx_kvm/master,
+# and updates the working directory with the latest changes, excluding specified blacklisted files.
+# This approach helps avoid leaking sensitive information and keeps the public repository stable and organized.
+
 # Define a black list of files that should not be synchronized
 black_list=(
   "sync_with_osx_kvm_master.sh"
