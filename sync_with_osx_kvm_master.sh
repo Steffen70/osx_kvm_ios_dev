@@ -11,6 +11,7 @@ black_list=(
   "OpenCore-Boot.sh"
   "OVMF_VARS-1920x1080.fd"
   "OpenCore/OpenCore.qcow2"
+  "LICENSE"
 )
 
 # Check remote osx_kvm exists - if not, prompt to the user to add it

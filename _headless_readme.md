@@ -28,9 +28,7 @@ If you need to install XCode, you'll need a unique serial number. Complete steps
 # Run the following commands on the macOS VM
 
 # Download XCode from [Apple Developer](https://developer.apple.com/download/all/?q=xcode)
-xip -x ~/Downloads/$xcode_version.xip
-# Copy Xcode to /Applications
-# Start Xcode and install iOS SDK
+xip -x ~/Downloads/$xcode_version.xip -C /Applications
 
 # Install XCode command line tools
 xcode-select --install
